@@ -3,14 +3,12 @@ name = "zero2prod"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "link-arg=-fuse-ld=lld"]
 
-# [target.x86_64-pc-windows-msvc]
-# rustflags = ["-C", "link-arg=-fuse-ld=lld"]
-
-# [target.x86_64-pc-windows-gnu]
-# rustflags = ["-C", "link-arg=-fuse-ld=lld"]
+[target.x86_64-pc-windows-gnu]
+rustflags = ["-C", "link-arg=-fuse-ld=lld"]
 
 [dependencies]
-actix-web = "4.3.1"
-tokio = "1.28.2"
+actix-web = "4"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
