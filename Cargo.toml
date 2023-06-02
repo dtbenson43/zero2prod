@@ -3,12 +3,21 @@ name = "zero2prod"
 version = "0.1.0"
 edition = "2021"
 
-[target.x86_64-pc-windows-msvc]
-rustflags = ["-C", "link-arg=-fuse-ld=lld"]
+[lib]
+path = "src/lib.rs"
+# [target.x86_64-pc-windows-msvc]
+# rustflags = ["-C", "link-arg=-fuse-ld=lld"]
 
-[target.x86_64-pc-windows-gnu]
-rustflags = ["-C", "link-arg=-fuse-ld=lld"]
+# [target.x86_64-pc-windows-gnu]
+# rustflags = ["-C", "link-arg=-fuse-ld=lld"]
+
+[[bin]]
+path = "src/main.rs"
+name = "zero2prod"
 
 [dependencies]
 actix-web = "4"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+
+[dev-dependencies]
+reqwest = "0.11"
