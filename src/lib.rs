@@ -5,7 +5,7 @@ use std::net::TcpListener;
 #[derive(serde::Deserialize)]
 struct FormData {
     email: String,
-    name: String
+    name: String,
 }
 
 async fn health_check() -> HttpResponse {
