@@ -45,17 +45,29 @@ if ([string]::IsNullOrEmpty($env:SKIP_DOCKER)) {
       # ^ Increased maximum number of connections for testing purposes
 }
 
+
+$MaxRetries = 60
+$RetryCount = 0
 # Keep pinging Postgres until it's ready to accept commands
 do {
-    try {
-        $env:PGPASSWORD=$DB_PASSWORD; psql -h $DB_HOST -U $DB_USER -p $DB_PORT -d "postgres" -c '\q'
-        $ready = $true
+    $env:PGPASSWORD=$DB_PASSWORD
+    & psql -h $DB_HOST -U $DB_USER -p $DB_PORT -d "postgres" -c '\q'
+    if ($? -eq $true) {
+        Write-Host "Postgres is ready."
+        break
     }
-    catch {
-        Write-Host "Postgres is still unavailable - sleeping"
-        Start-Sleep -s 1
+    else {
+        if($RetryCount -ge $MaxRetries) {
+            Write-Host "Max retries reached, Postgres is still unavailable."
+            exit 1
+        }
+        else {
+            Write-Host "Postgres is still unavailable - sleeping"
+            Start-Sleep -s 1
+            $RetryCount++
+        }
     }
-} until ($ready -eq $true)
+} until ($false)
 
 Write-Host "Postgres is up and running on port ${DB_PORT} - running migrations now!"
 
