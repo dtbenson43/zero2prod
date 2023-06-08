@@ -1,10 +1,10 @@
 //! tests/health_check.rs
 
+use sqlx::{Connection, PgConnection};
 use std::net::TcpListener;
-use sqlx::{PgConnection, Connection};
+use zero2prod::configuration;
 use zero2prod::configuration::get_configuration;
 use zero2prod::startup;
-use zero2prod::configuration;
 
 fn spawn_app() -> String {
     let listener = TcpListener::bind("127.0.0.1:0").expect("Failed to bind random port");
