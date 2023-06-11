@@ -1,5 +1,8 @@
 {
     "cSpell.words": [
-        "reqwest"
+        "chrono",
+        "reqwest",
+        "sqlx",
+        "ursala"
     ]
 }
